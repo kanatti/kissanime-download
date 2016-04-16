@@ -1,13 +1,14 @@
-import time
-import configparser
 import os
+import time
 import urllib
+import configparser
+
 from bs4 import  BeautifulSoup
 from selenium import webdriver
-# from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 
-# =========== DEFINE GLOBAL VERIABLES ===========
+
+# Define global variables (from config file)
 config = configparser.ConfigParser()
 config.read('config.ini')
 glob_user = config['login']['username']
@@ -15,8 +16,9 @@ glob_pw = config['login']['password']
 glob_link = config['anime']['link'] 
 anime_name = config['anime']['name']
 glob_folder = anime_name
-#glob_cont = 0
 
+
+# Prepare for files/folders for download
 try:
 	os.mkdir(glob_folder)
 	print('Directory made')
@@ -26,49 +28,44 @@ os.chdir(glob_folder)
 print('Directory changed')
 
 files = os.listdir()
-if 'n.txt' in files:
-	f = open('n.txt','r')
+if 'trackCopied.txt' in files:
+	f = open('trackCopied.txt','r')
 	m_in = f.read()
 	m_in = int(m_in) + 1
 	f.close()
 else:
 	m_in=0
 
-if 'j.txt' in files:
-	f = open('j.txt','r')
+if 'trackDownloaded.txt' in files:
+	f = open('trackDownloaded.txt','r')
 	j_init = f.read()
 	j_init = int(j_init) + 1
 	f.close()
 else:
 	j_init=0
-# =========== DEFINE GLOBAL VERIABLES ===========
 
 
-
+# Run firefox with selenium
 driver = webdriver.Firefox()
 driver.set_page_load_timeout(100)
+
+
+# Log into kissanime 
 driver.get("https://kissanime.to/Login")
 time.sleep(8)
-
-# locate username and password fields in the login page
 username = driver.find_element_by_id("username")
 password = driver.find_element_by_id("password")
-
-# type login info into fields
 username.send_keys(glob_user)
 password.send_keys(glob_pw)
-
-# send the filled out login form and wait
 password.send_keys(Keys.RETURN)
 time.sleep(6)
 print('Logged In')
 
 
+# Create list of episodes (links)
 driver.get(glob_link)
 currentpage = driver.page_source
-
 soup = BeautifulSoup(currentpage, 'html.parser')
-
 EpsList = []
 
 alltr = soup.find_all('tr')
@@ -82,10 +79,12 @@ for tr in alltr:
 
 EpsList = EpsList[::-1]
 nEps = len(EpsList)
-print('No of eps '+str(nEps))
+print('No of Episodes: '+str(nEps))
 mainDom = 'https://kissanime.to'
 epsLink=[]
 
+
+# Create list of download links for each episode
 for m in range(m_in,nEps):
 	driver.get(mainDom+EpsList[m])
 	time.sleep(5)
@@ -105,25 +104,28 @@ for m in range(m_in,nEps):
 	f.write(dLink+'\n')
 	f.close()
 
-	f=open('n.txt','w')
+	f=open('trackCopied.txt','w')
 	f.write(str(m))
 	f.close()
-	print('HTML ep num: '+str(m+1))
+	print('Copied Download Link for Episode '+str(m+1))
+
+driver.quit() # Exit Selenium
 
 
-driver.quit()
-
-# SELENIUM ENDS ====================================
-
-
+# Download episodes
 f = open('links.txt','r')
-dLinks = f.readlines()	
+dLinks = f.readlines()
 
 for j in range(j_init,nEps):	
 	dLink = dLinks[j]
-	f_name = anime_name+' - '+str(j+1)
+	ep_num = str(j+1)
+	ep_num = ep_num.rjust(3,'0')
+	f_name = anime_name+' - '+ep_num
 	print(f_name)
 	urllib.request.urlretrieve(dLink,f_name)
-	f=open('j.txt','w')
+	f=open('trackDownloaded.txt','w')
 	f.write(str(j))
 	f.close()
+
+
+# End of script
