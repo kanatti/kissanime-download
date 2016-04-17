@@ -8,7 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 import pySmartDL
-from pySmartDL import SmartDL
+#from pySmartDL import SmartDL
 
 # Define global variables (from config file)
 config = configparser.ConfigParser()
@@ -81,16 +81,20 @@ for tr in alltr:
 		alla = td.find_all('a')
 		for link in alla:
 			linx = link.get('href')
-			EpsList.append(linx)
+			temp = linx.split('/')
+			if temp[-1][0:7] == 'Episode':
+				EpsList.append(linx)
 
 EpsList = EpsList[::-1]
 nEps = len(EpsList)
 print('No of Episodes: '+str(nEps))
 mainDom = 'https://kissanime.to'
-epsLink=[]
 
 
 # Create list of download links for each episode
+print('Copied download link for episodes:')
+f = open('links.txt','a')
+
 for m in range(m_in,nEps):
 	driver.get(mainDom+EpsList[m])
 	time.sleep(5)
@@ -105,15 +109,14 @@ for m in range(m_in,nEps):
 		soup = BeautifulSoup(page,'html.parser')
 		divD = soup.find_all('div',{'id':'divDownload'})
 		dLink = divD[0].a.get('href')
-	epsLink.append(dLink)
-	f = open('links.txt','a')
+	
 	f.write(dLink+'\n')
-	f.close()
+	print(str(m+1))
 
-	f=open('trackCopied.txt','w')
-	f.write(str(m))
-	f.close()
-	print('Copied Download Link for Episode '+str(m+1))
+f.close()
+f=open('trackCopied.txt','w')
+f.write(str(m))
+f.close()
 
 driver.quit() # Exit Selenium
 
@@ -138,6 +141,8 @@ for j in range(j_init,nEps):
 # Download episodes using pySmartDL
 f = open('links.txt','r')
 dLinks = f.readlines()
+f.close()
+
 
 for j in range(j_init,nEps):
 	ep_num = str(j+1)
@@ -161,9 +166,10 @@ for j in range(j_init,nEps):
 		time.sleep(1)
 	print('Time taken: '+str(i)+' secs')
 
-	f=open('trackDownloaded.txt','w')
-	f.write(str(j))
-	f.close()	
+f=open('trackDownloaded.txt','w')
+f.write(str(j))
+f.close()	
 
+print('Download complete :)')
 
 # End of script	
