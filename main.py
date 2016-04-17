@@ -29,6 +29,8 @@ except:
 os.chdir(glob_folder)
 print('Directory changed')
 
+glob_folder=os.getcwd()
+
 files = os.listdir()
 if 'trackCopied.txt' in files:
 	f = open('trackCopied.txt','r')
@@ -89,6 +91,7 @@ epsLink=[]
 
 
 # Create list of download links for each episode
+print("Copying download links for episodes:")
 for m in range(m_in,nEps):
 	driver.get(mainDom+EpsList[m])
 	time.sleep(5)
@@ -111,13 +114,13 @@ for m in range(m_in,nEps):
 	f=open('trackCopied.txt','w')
 	f.write(str(m))
 	f.close()
-	print('Copied Download Link for Episode '+str(m+1))
+	print(str(m+1),end=' ')
 
 driver.quit() # Exit Selenium
 
 
 # Download episodes using URLLIB
-'''
+
 f = open('links.txt','r')
 dLinks = f.readlines()
 
@@ -131,11 +134,13 @@ for j in range(j_init,nEps):
 	f=open('trackDownloaded.txt','w')
 	f.write(str(j))
 	f.close()
-'''
+
 
 # Download episodes using pySmartDL
+'''
 f = open('links.txt','r')
 dLinks = f.readlines()
+
 
 for j in range(j_init,nEps):
 	ep_num = str(j+1)
@@ -144,7 +149,7 @@ for j in range(j_init,nEps):
 	print(f_name+' ','\t')
 
 	url = dLinks[j][0:-1]
-	dest = './'+f_name
+	dest = os.path.join(glob_folder,f_name)
 	obj = pySmartDL.SmartDL(url, dest, progress_bar=False, fix_urls=True)
 	obj.start(blocking=False)
 	parts=[]
@@ -162,6 +167,7 @@ for j in range(j_init,nEps):
 	f=open('trackDownloaded.txt','w')
 	f.write(str(j))
 	f.close()	
+'''
 
 
 # End of script	
