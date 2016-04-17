@@ -29,6 +29,8 @@ except:
 os.chdir(glob_folder)
 print('Directory changed')
 
+glob_folder=os.getcwd()
+
 files = os.listdir()
 if 'trackCopied.txt' in files:
 	f = open('trackCopied.txt','r')
@@ -144,7 +146,7 @@ for j in range(j_init,nEps):
 	print(f_name+' ','\t')
 
 	url = dLinks[j][0:-1]
-	dest = './'+f_name
+	dest = os.path.join(glob_folder,f_name)
 	obj = pySmartDL.SmartDL(url, dest, progress_bar=False, fix_urls=True)
 	obj.start(blocking=False)
 	parts=[]
