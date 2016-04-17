@@ -81,7 +81,9 @@ for tr in alltr:
 		alla = td.find_all('a')
 		for link in alla:
 			linx = link.get('href')
-			EpsList.append(linx)
+			temp = linx.split('/')
+			if temp[-1][0:7] == 'Episode':
+				EpsList.append(linx)
 
 EpsList = EpsList[::-1]
 nEps = len(EpsList)
