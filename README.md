@@ -1,5 +1,5 @@
 ## kissanime-download
-Downloads animes from the website [kissanime](http://kissanime.to)
+Downloads animes from the website [kissanime](http://kissanime.to). If by any chance the script is interrupted before it completes downloading all episodes, running it again will continue from where it left off.
 
 ### Dependencies
 1. [Python 3](https://www.python.org/)
