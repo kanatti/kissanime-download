@@ -120,7 +120,7 @@ for j in range(j_init,nEps):
 	dLink = dLinks[j]
 	ep_num = str(j+1)
 	ep_num = ep_num.rjust(3,'0')
-	f_name = anime_name+' - '+ep_num
+	f_name = anime_name+' - '+ep_num + '.mp4'
 	print(f_name)
 	urllib.request.urlretrieve(dLink,f_name)
 	f=open('trackDownloaded.txt','w')
