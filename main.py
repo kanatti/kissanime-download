@@ -7,6 +7,8 @@ from bs4 import  BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
+import pySmartDL
+from pySmartDL import SmartDL
 
 # Define global variables (from config file)
 config = configparser.ConfigParser()
@@ -43,6 +45,8 @@ if 'trackDownloaded.txt' in files:
 	f.close()
 else:
 	j_init=0
+
+#print(files)
 
 
 # Run firefox with selenium
@@ -112,7 +116,8 @@ for m in range(m_in,nEps):
 driver.quit() # Exit Selenium
 
 
-# Download episodes
+# Download episodes using URLLIB
+'''
 f = open('links.txt','r')
 dLinks = f.readlines()
 
@@ -126,6 +131,37 @@ for j in range(j_init,nEps):
 	f=open('trackDownloaded.txt','w')
 	f.write(str(j))
 	f.close()
+'''
+
+# Download episodes using pySmartDL
+f = open('links.txt','r')
+dLinks = f.readlines()
+
+for j in range(j_init,nEps):
+	ep_num = str(j+1)
+	ep_num = ep_num.rjust(3,'0')
+	f_name = anime_name+' - '+ep_num + '.mp4'
+	print(f_name+' ','\t')
+
+	url = dLinks[j][0:-1]
+	dest = './'+f_name
+	obj = pySmartDL.SmartDL(url, dest, progress_bar=False, fix_urls=True)
+	obj.start(blocking=False)
+	parts=[]
+	for i in range(0,5):
+		parts.append(dest+'.00'+str(i))
+	i = 0;
+	while True:
+		if obj.isFinished():
+			print('Done')
+			break
+		i = i+1
+		time.sleep(1)
+	print('Time taken: '+str(i)+' secs')
+
+	f=open('trackDownloaded.txt','w')
+	f.write(str(j))
+	f.close()	
 
 
-# End of script
+# End of script	
