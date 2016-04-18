@@ -13,4 +13,4 @@ If you are using a unix system, you can use threaded-download which will downloa
 1. Add username and password in config.ini
 2. Add anime url and name
 3. Run as `python3 download.py`
-4. For unix users who want faster download, run as `python threaded-download.py`
+4. For unix users who want faster download, run as `python3 threaded-download.py`
