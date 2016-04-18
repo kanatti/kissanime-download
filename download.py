@@ -48,7 +48,6 @@ if 'trackDownloaded.txt' in files:
 else:
 	j_init=0
 
-#print(files)
 
 
 # Run firefox with selenium
@@ -125,6 +124,8 @@ driver.quit() # Exit Selenium
 
 f = open('links.txt','r')
 dLinks = f.readlines()
+
+print("Downloading")
 
 for j in range(j_init,nEps):	
 	dLink = dLinks[j]
