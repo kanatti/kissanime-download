@@ -5,7 +5,7 @@ If you are using a unix system, you can use threaded-download which will downloa
 ### Dependencies
 1. [Python 3](https://www.python.org/)
 2. [Selenium](https://pypi.python.org/pypi/selenium) python package. Install as `pip3 install selenium`
-3. [BeautifulSoup 4](https://www.crummy.com/software/BeautifulSoup/) python package. Install as `pip3 install beautifulsoup4'
+3. [BeautifulSoup 4](https://www.crummy.com/software/BeautifulSoup/) python package. Install as `pip3 install beautifulsoup4`
 4. [pySmartDL](https://pypi.python.org/pypi/pySmartDL/) .Install as `pip3 install pySmartDL`
 5. Firefox Webbrowser
 
