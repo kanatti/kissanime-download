@@ -9,7 +9,7 @@ Downloads anime from the website [kissanime](http://kissanime.to). If the downlo
 5. Firefox Webbrowser
 
 ### How to run
-0. Use small-download.py for downloading series with less than 30 episodes. Use big-download.py for longer series.
-1. Add username and password in  big-config.ini or small-config.ini file.
+0. Use short-downloader.py for downloading series with less than 30 episodes. Use long-downloader.py for longer series.
+1. Add username and password in  long-config.ini or short-config.ini file.
 2. Add anime url and name
-3. Run as `python3 big-download.py` or `python3 small-download.py`
+3. Run as `python3 long-downloader.py` or `python3 short-downloader.py`
