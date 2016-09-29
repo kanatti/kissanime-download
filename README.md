@@ -15,3 +15,10 @@ Threaded-download will downloaded multiple files at the same time, ensuring fast
 2. Add anime url and name
 3. Run as `python3 download.py`
 4. For users who want faster download, run as `python3 threaded-download.py`
+
+### !Replacement for Selenium
+A better solution would be to silently open the browser (in the background) and hit the URLs and parse the source code etc. Possible solutions might be foundhere:
+1. http://stackoverflow.com/questions/16180428/can-selenium-webdriver-open-browser-windows-silently-in-background
+2. https://www.quora.com/What-are-some-great-alternatives-to-selenium-testing
+3. http://stackoverflow.com/questions/5370762/how-to-hide-firefox-window-selenium-webdriver
+4. http://stackoverflow.com/questions/1418082/is-it-possible-to-hide-the-browser-in-selenium-rc
