@@ -18,6 +18,7 @@ Threaded-download will downloaded multiple files at the same time, ensuring fast
 
 ### !Replacement for Selenium
 A better solution would be to silently open the browser (in the background) and hit the URLs and parse the source code etc. Possible solutions might be foundhere:
+0. http://phantomjs.org/documentation/
 1. http://stackoverflow.com/questions/16180428/can-selenium-webdriver-open-browser-windows-silently-in-background
 2. https://www.quora.com/What-are-some-great-alternatives-to-selenium-testing
 3. http://stackoverflow.com/questions/5370762/how-to-hide-firefox-window-selenium-webdriver
